@@ -1,60 +1,40 @@
--- Create the database
 CREATE DATABASE IF NOT EXISTS alx_book_store;
+
 USE alx_book_store;
 
--- ========================================
--- AUTHORS TABLE
--- ========================================
-CREATE TABLE AUTHORS (
-    AUTHOR_ID INT NOT NULL AUTO_INCREMENT,
-    AUTHOR_NAME VARCHAR(215) NOT NULL,
-    PRIMARY KEY (AUTHOR_ID)
+CREATE TABLE IF NOT EXISTS Authors (
+    author_id INT PRIMARY KEY,
+    author_name VARCHAR(215) NOT NULL
 );
 
--- ========================================
--- BOOKS TABLE
--- ========================================
-CREATE TABLE BOOKS (
-    BOOK_ID INT NOT NULL AUTO_INCREMENT,
-    TITLE VARCHAR(130) NOT NULL,
-    AUTHOR_ID INT NOT NULL,
-    PRICE DOUBLE NOT NULL,
-    PUBLICATION_DATE DATE NOT NULL,
-    PRIMARY KEY (BOOK_ID),
-    FOREIGN KEY (AUTHOR_ID) REFERENCES AUTHORS(AUTHOR_ID)
+CREATE TABLE IF NOT EXISTS Books (
+    book_id INT PRIMARY KEY,
+    title VARCHAR(130) NOT NULL,
+    author_id INT,
+    price DOUBLE,
+    publication_date DATE,
+    CONSTRAINT fk_books_authors FOREIGN KEY (author_id) REFERENCES Authors(author_id)
 );
 
--- ========================================
--- CUSTOMERS TABLE
--- ========================================
-CREATE TABLE CUSTOMERS (
-    CUSTOMER_ID INT NOT NULL AUTO_INCREMENT,
-    CUSTOMER_NAME VARCHAR(215) NOT NULL,
-    EMAIL VARCHAR(215) NOT NULL,
-    ADDRESS TEXT NOT NULL,
-    PRIMARY KEY (CUSTOMER_ID)
+CREATE TABLE IF NOT EXISTS Customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(215) NOT NULL,
+    email VARCHAR(215) NOT NULL,
+    address TEXT
 );
 
--- ========================================
--- ORDERS TABLE
--- ========================================
-CREATE TABLE ORDERS (
-    ORDER_ID INT NOT NULL AUTO_INCREMENT,
-    CUSTOMER_ID INT NOT NULL,
-    ORDER_DATE DATE NOT NULL,
-    PRIMARY KEY (ORDER_ID),
-    FOREIGN KEY (CUSTOMER_ID) REFERENCES CUSTOMERS(CUSTOMER_ID)
+CREATE TABLE IF NOT EXISTS Orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    CONSTRAINT fk_orders_customers FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
 );
 
--- ========================================
--- ORDER_DETAILS TABLE
--- ========================================
-CREATE TABLE ORDER_DETAILS (
-    ORDERDETAILID INT NOT NULL AUTO_INCREMENT,
-    ORDER_ID INT NOT NULL,
-    BOOK_ID INT NOT NULL,
-    QUANTITY DOUBLE NOT NULL,
-    PRIMARY KEY (ORDERDETAILID),
-    FOREIGN KEY (ORDER_ID) REFERENCES ORDERS(ORDER_ID),
-    FOREIGN KEY (BOOK_ID) REFERENCES BOOKS(BOOK_ID)
+CREATE TABLE IF NOT EXISTS Order_Details (
+    orderdetailid INT PRIMARY KEY,
+    order_id INT,
+    book_id INT,
+    quantity DOUBLE,
+    CONSTRAINT fk_orderdetails_orders FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    CONSTRAINT fk_orderdetails_books FOREIGN KEY (book_id) REFERENCES Books(book_id)
 );
