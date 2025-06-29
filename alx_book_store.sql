@@ -2,17 +2,17 @@
 CREATE DATABASE IF NOT EXISTS alx_book_store;
 USE alx_book_store;
 
--- ==========================================
--- ✅ AUTHORS TABLE
--- ==========================================
+-- ========================
+-- AUTHORS TABLE
+-- ========================
 CREATE TABLE AUTHORS (
     AUTHOR_ID INT PRIMARY KEY AUTO_INCREMENT,
     AUTHOR_NAME VARCHAR(215) NOT NULL
 );
 
--- ==========================================
--- ✅ BOOKS TABLE
--- ==========================================
+-- ========================
+-- BOOKS TABLE
+-- ========================
 CREATE TABLE BOOKS (
     BOOK_ID INT PRIMARY KEY AUTO_INCREMENT,
     TITLE VARCHAR(130) NOT NULL,
@@ -22,19 +22,19 @@ CREATE TABLE BOOKS (
     FOREIGN KEY (AUTHOR_ID) REFERENCES AUTHORS(AUTHOR_ID)
 );
 
--- ==========================================
--- ✅ CUSTOMERS TABLE
--- ==========================================
+-- ========================
+-- CUSTOMERS TABLE
+-- ========================
 CREATE TABLE CUSTOMERS (
     CUSTOMER_ID INT PRIMARY KEY AUTO_INCREMENT,
     CUSTOMER_NAME VARCHAR(215) NOT NULL,
-    EMAIL VARCHAR(215) UNIQUE NOT NULL,
-    ADDRESS TEXT
+    EMAIL VARCHAR(215) NOT NULL,
+    ADDRESS TEXT NOT NULL
 );
 
--- ==========================================
--- ✅ ORDERS TABLE
--- ==========================================
+-- ========================
+-- ORDERS TABLE
+-- ========================
 CREATE TABLE ORDERS (
     ORDER_ID INT PRIMARY KEY AUTO_INCREMENT,
     CUSTOMER_ID INT NOT NULL,
@@ -42,9 +42,9 @@ CREATE TABLE ORDERS (
     FOREIGN KEY (CUSTOMER_ID) REFERENCES CUSTOMERS(CUSTOMER_ID)
 );
 
--- ==========================================
--- ✅ ORDER_DETAILS TABLE
--- ==========================================
+-- ========================
+-- ORDER_DETAILS TABLE
+-- ========================
 CREATE TABLE ORDER_DETAILS (
     ORDERDETAILID INT PRIMARY KEY AUTO_INCREMENT,
     ORDER_ID INT NOT NULL,
